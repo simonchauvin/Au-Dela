@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="35"
+   height="35"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="theThing.svg"
+   inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\theThing.png"
+   inkscape:export-xdpi="359.67072"
+   inkscape:export-ydpi="359.67072">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="20.404206"
+     inkscape:cy="17.867265"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1028"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-276.14278,-599.79082)">
+    <path
+       sodipodi:type="arc"
+       style="fill:#141414;fill-opacity:1;stroke:#f0f0f0;stroke-width:7.97540808;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path2985"
+       sodipodi:cx="421.42856"
+       sodipodi:cy="498.79074"
+       sodipodi:rx="144.28572"
+       sodipodi:ry="135"
+       d="m 565.71428,498.79074 c 0,74.55844 -64.59892,135 -144.28572,135 -79.6868,0 -144.28572,-60.44156 -144.28572,-135 0,-74.55844 64.59892,-135 144.28572,-135 79.6868,0 144.28572,60.44156 144.28572,135 z"
+       transform="matrix(0.11791794,0,0,0.12602871,243.94879,554.42887)"
+       inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\theThing.png"
+       inkscape:export-xdpi="359.67072"
+       inkscape:export-ydpi="359.67072" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#3c3c3c;stroke-opacity:1"
+       id="path3755"
+       sodipodi:cx="-41.289986"
+       sodipodi:cy="-6.2665172"
+       sodipodi:rx="15.026019"
+       sodipodi:ry="13.889598"
+       d="m -26.263967,-6.2665172 c 0,7.6710131 -6.727377,13.8895979 -15.026019,13.8895979 -8.298641,0 -15.026019,-6.2185848 -15.026019,-13.8895979 0,-7.6710128 6.727378,-13.8895978 15.026019,-13.8895978 8.298642,0 15.026019,6.218585 15.026019,13.8895978 z"
+       transform="matrix(0.33275586,0,0,0.35998134,307.38227,619.54665)"
+       inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\theThing.png"
+       inkscape:export-xdpi="359.67072"
+       inkscape:export-ydpi="359.67072" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="path3757"
+       sodipodi:cx="-58.210041"
+       sodipodi:cy="-18.514616"
+       sodipodi:rx="6.6922607"
+       sodipodi:ry="7.1973367"
+       d="m -51.51778,-18.514616 c 0,3.974979 -2.996227,7.197337 -6.692261,7.197337 -3.696034,0 -6.692261,-3.222358 -6.692261,-7.197337 0,-3.974979 2.996227,-7.197337 6.692261,-7.197337 3.696034,0 6.692261,3.222358 6.692261,7.197337 z"
+       transform="matrix(0.29885244,0,0,0.20841026,311.03899,621.14946)"
+       inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\theThing.png"
+       inkscape:export-xdpi="359.67072"
+       inkscape:export-ydpi="359.67072" />
+  </g>
+</svg>
