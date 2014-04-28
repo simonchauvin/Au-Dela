@@ -52,7 +52,7 @@ MenuState.prototype.init = function () {
     //Add the title to the MenuState to have the engine display and update it
     this.add(this.instructions);
     this.tuto.addComponent(new FM.SpatialComponent(100, 450, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| WQSD to move |", this.tuto));
+    this.tuto.addComponent(new FM.TextRendererComponent("| WASD to move |", this.tuto));
     this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
     this.add(this.tuto);
     this.tuto = new FM.GameObject(10);
