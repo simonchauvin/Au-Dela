@@ -19,6 +19,7 @@ var PlayState = function () {
      */
     this.avatar = new Avatar(this.avatarType, this.bulletType);
     this.theThing = new TheThing(this.theThingType, this.bulletType, this.avatar);
+    this.ambiance = new FM.GameObject(0);
     
     //this.sharedResource = new SharedResource();
     this.cursor = new FM.GameObject(99);
@@ -40,6 +41,10 @@ PlayState.prototype.init = function () {
     FM.State.prototype.init.call(this);
 
     //Init instructions
+    this.ambiance.addComponent(new FM.AudioComponent(this.ambiance));
+    this.ambiance.components[FM.ComponentTypes.SOUND].addSound(FM.AssetManager.getAssetByName("ambiance"));
+    this.ambiance.components[FM.ComponentTypes.SOUND].play("ambiance", 0.4, true);
+    this.add(this.ambiance);
     var background = new FM.GameObject(0);
     background.addComponent(new FM.SpatialComponent(0, 0, background));
     background.addComponent(new FM.SpriteRendererComponent(FM.AssetManager.getAssetByName("background"), 1024, 768, background));
