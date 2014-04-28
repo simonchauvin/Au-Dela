@@ -8,14 +8,24 @@ var Avatar = function (avatarType, bulletType) {
     FM.GameObject.call(this, 10);
     this.addType(avatarType)
     //Add components to the game object
-    this.spatial = new FM.SpatialComponent(100, 200, this);
+    this.spatial = new FM.SpatialComponent(100, 100, this);
     this.addComponent(this.spatial);
     this.renderer = new FM.AnimatedSpriteRendererComponent(FM.AssetManager.getAssetByName("avatar"), 72, 35, this);
+    this.renderer.addAnimation("walk", [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18, 19], 30, true);
+    this.renderer.addAnimation("stop", [0], 30, false);
     this.addComponent(this.renderer);
+    this.renderer.play("walk");
     this.physic = new FM.CircleComponent(30, this);
     this.physic.offset.x += 6;
     this.physic.offset.y -= 12;
     this.addComponent(this.physic);
+    this.sound = new FM.AudioComponent(this);
+    this.sound.addSound(FM.AssetManager.getAssetByName("shoot"));
+    this.sound.addSound(FM.AssetManager.getAssetByName("avatar_hit"));
+    this.sound.addSound(FM.AssetManager.getAssetByName("boost"));
+    this.sound.addSound(FM.AssetManager.getAssetByName("bullet_picked"));
+    this.sound.addSound(FM.AssetManager.getAssetByName("no_more_bullets"));
+    this.addComponent(this.sound);
     this.gun = new FM.GameObject(11);
     this.gunSpatial = new FM.SpatialComponent(this.spatial.position.x + this.physic.radius + 2.5, this.spatial.position.y + this.physic.radius - 25, this.gun);
     this.gun.addComponent(this.gunSpatial);
@@ -24,11 +34,14 @@ var Avatar = function (avatarType, bulletType) {
     
     this.bulletType = bulletType;
     
-    this.SPEED = 150;
+    this.SPEED = 180;
     this.bulletsLeft = 50;
     this.bullets = [];
     this.bullet = null;
     this.shootTime = 0;
+    this.boostTime = 2;
+    this.boostWaintingTime = 4;
+    this.boost = false;
 };
 //PlayState inherits from FM.State
 Avatar.prototype = Object.create(FM.GameObject.prototype);
@@ -56,38 +69,55 @@ Avatar.prototype.update = function (dt) {
     // Speed
     if (FM.Game.isKeyPressed(FM.Keyboard.W)) {
         this.physic.velocity = new FM.Vector(Math.cos(this.spatial.angle - Math.PI / 2) * this.SPEED, Math.sin(this.spatial.angle - Math.PI / 2) * this.SPEED);
+        if (this.renderer.currentAnim !== "walk") {
+            this.renderer.play("walk");
+        }
     }
     if (FM.Game.isKeyPressed(FM.Keyboard.S)) {
         this.physic.velocity = new FM.Vector(Math.cos(this.spatial.angle - Math.PI / 2) * -this.SPEED, Math.sin(this.spatial.angle - Math.PI / 2) * -this.SPEED);
+        if (this.renderer.currentAnim !== "walk") {
+            this.renderer.play("walk");
+        }
     }
     if (!FM.Game.isKeyPressed(FM.Keyboard.W) && !FM.Game.isKeyPressed(FM.Keyboard.S)) {
         this.physic.velocity.x = 0;
         this.physic.velocity.y = 0;
+        this.renderer.play("stop");
     }
     // Straff left
     if (FM.Game.isKeyPressed(FM.Keyboard.A)) {
-        //console.log(this.spatial.angle * 180 / Math.PI);
-        //console.log((this.spatial.angle - (Math.PI / 2)) * cursorDistance.x);
         this.spatial.angle -= 0.1;
-        //this.physic.velocity = new FM.Vector((this.spatial.angle + (Math.PI / 2)) * cursorDistance.x, (this.spatial.angle + (Math.PI / 2)) * cursorDistance.y);
     }
     // Straff right
     if (FM.Game.isKeyPressed(FM.Keyboard.D)) {
         this.spatial.angle += 0.1;
     }
-    // Put down
-    /*if (FM.Game.isMouseClicked()) {
-        if (this.shootTime === 0) {
-            this.bullet = new Bullet(position, this.bulletType);
-            FM.Game.currentState.add(this.bullet);
+    // Boost
+    if (FM.Game.isKeyReleased(FM.Keyboard.SPACE) && this.boostWaintingTime >= 6) {
+        this.SPEED += 80;
+        this.boostWaintingTime = 0;
+        this.boostTime = 2;
+        this.boost = true;
+        if (!this.sound.isPlaying("boost")) {
+            this.sound.play("boost", 1, false);
         }
-    }*/
+    }
+    if (this.boostWaintingTime < 6) {
+        this.boostWaintingTime += dt;
+        this.boostTime -= dt;
+    }
+    if (this.boostTime <= 0 && this.boost) {
+        this.SPEED -= 80;
+        this.boost = false;
+    }
     // Shoot
     if (FM.Game.isMousePressed() && this.shootTime < 0.8 && this.bulletsLeft > 0) {
         if (this.bullet === null) {
             this.bullet = new Bullet(position, this.bulletType, true);
         }
         this.shootTime += dt;
+    } else if (FM.Game.isMousePressed() && this.bulletsLeft <= 0) {
+        this.sound.play("no_more_bullets", 0.3, false);
     }
     if (FM.Game.isMouseReleased()) {
         if (this.bullet) {
@@ -147,6 +177,7 @@ Avatar.prototype.update = function (dt) {
             this.bullet = null;
             this.bulletsLeft--;
             FM.Game.currentState.sortByZIndex();
+            this.sound.play("shoot", 0.5, false);
         }
         this.shootTime = 0;
     }

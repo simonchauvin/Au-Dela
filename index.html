@@ -18,6 +18,7 @@
         //Include your project's files
         FM.includeJsFile("src/MenuState.js");
         FM.includeJsFile("src/PlayState.js");
+        FM.includeJsFile("src/EndState.js");
         FM.includeJsFile("src/Avatar.js");
         FM.includeJsFile("src/TheThing.js");
         FM.includeJsFile("src/SharedResource.js");
@@ -44,33 +45,43 @@
             /*if (!assetManager.addAsset("ambiance_avoid", param.AUDIO, "assets/music/ambiance_avoid.wav")) {
                 assetManager.addAsset("ambiance_avoid", param.AUDIO, "assets/music/ambiance_avoid.mp3");
             }
-            if (!assetManager.addAsset("ambiance_attack", param.AUDIO, "assets/sfx/ambiance_attack.wav")) {
-                assetManager.addAsset("ambiance_attack", param.AUDIO, "assets/sfx/ambiance_attack.mp3");
+            if (!assetManager.addAsset("ambiance_attack", param.AUDIO, "assets/music/ambiance_attack.wav")) {
+                assetManager.addAsset("ambiance_attack", param.AUDIO, "assets/music/ambiance_attack.mp3");
+            }*/
+            if (!assetManager.addAsset("avatar_hit", param.AUDIO, "assets/sfx/avatar_hit.wav")) {
+                assetManager.addAsset("avatar_hit", param.AUDIO, "assets/sfx/avatar_hit.mp3");
             }
-            if (!assetManager.addAsset("avatar_hit", param.AUDIO, "assets/music/avatar_hit.wav")) {
-                assetManager.addAsset("avatar_hit", param.AUDIO, "assets/music/avatar_hit.mp3");
+            if (!assetManager.addAsset("boost", param.AUDIO, "assets/sfx/boost.wav")) {
+                assetManager.addAsset("boost", param.AUDIO, "assets/sfx/boost.mp3");
             }
             if (!assetManager.addAsset("bullet_picked", param.AUDIO, "assets/sfx/bullet_picked.wav")) {
                 assetManager.addAsset("bullet_picked", param.AUDIO, "assets/sfx/bullet_picked.mp3");
             }
-            if (!assetManager.addAsset("bullet_spawn", param.AUDIO, "assets/music/bullet_spawn.wav")) {
-                assetManager.addAsset("bullet_spawn", param.AUDIO, "assets/music/bullet_spawn.mp3");
+            if (!assetManager.addAsset("bullet_spawn", param.AUDIO, "assets/sfx/bullet_spawn.wav")) {
+                assetManager.addAsset("bullet_spawn", param.AUDIO, "assets/sfx/bullet_spawn.mp3");
             }
             if (!assetManager.addAsset("shoot", param.AUDIO, "assets/sfx/shoot.wav")) {
                 assetManager.addAsset("shoot", param.AUDIO, "assets/sfx/shoot.mp3");
             }
             if (!assetManager.addAsset("the_thing_hit", param.AUDIO, "assets/sfx/the_thing_hit.wav")) {
                 assetManager.addAsset("the_thing_hit", param.AUDIO, "assets/sfx/the_thing_hit.mp3");
-            }*/
+            }
+            if (!assetManager.addAsset("no_more_bullets", param.AUDIO, "assets/sfx/no_more_bullets.wav")) {
+                assetManager.addAsset("no_more_bullets", param.AUDIO, "assets/sfx/no_more_bullets.mp3");
+            }
 
             //Add image assets
             assetManager.addAsset("avatar", param.IMAGE, "assets/gfx/avatar.png");
             assetManager.addAsset("gun", param.IMAGE, "assets/gfx/gun.png");
             assetManager.addAsset("cursor", param.IMAGE, "assets/gfx/cursor.png");
+            assetManager.addAsset("wall", param.IMAGE, "assets/gfx/wall.png");
+            assetManager.addAsset("prison", param.IMAGE, "assets/gfx/prison.png");
             assetManager.addAsset("theThing", param.IMAGE, "assets/gfx/theThing.png");
             assetManager.addAsset("bullet", param.IMAGE, "assets/gfx/bullet.png");
             assetManager.addAsset("bullet_rack", param.IMAGE, "assets/gfx/bullet_rack.png");
             assetManager.addAsset("background", param.IMAGE, "assets/gfx/background.png");
+            assetManager.addAsset("the_thing_particle", param.IMAGE, "assets/gfx/the_thing_particle.png");
+            assetManager.addAsset("prison_particle", param.IMAGE, "assets/gfx/prison_particle.png");
 
             //Add the tmx world file
             //assetManager.addAsset("world", param.FILE, "world/world.tmx");

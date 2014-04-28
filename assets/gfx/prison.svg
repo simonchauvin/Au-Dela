@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="10"
-   height="10"
+   width="65"
+   height="65"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="cursor.svg"
-   inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\cursor.png"
+   sodipodi:docname="prison.svg"
+   inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\prison.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.4"
-     inkscape:cx="4.1659053"
-     inkscape:cy="-1.5332368"
+     inkscape:zoom="2.8"
+     inkscape:cx="43.714265"
+     inkscape:cy="6.7941501"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,13 +58,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-9.381669,-319.81282)">
+     transform="translate(-171.41764,-446.30167)">
     <rect
-       style="fill:#f0f0f0;fill-opacity:1;stroke:#000000;stroke-width:1.8040936;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#ff0000;fill-opacity:1;stroke:#202020;stroke-width:9.99663448;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:0.19607843;stroke-dasharray:none"
        id="rect2985"
-       width="8.1959057"
-       height="8.1959066"
-       x="10.283716"
-       y="320.71487" />
+       width="55.003365"
+       height="55.003365"
+       x="176.41595"
+       y="451.29999" />
   </g>
 </svg>

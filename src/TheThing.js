@@ -7,14 +7,20 @@ var TheThing = function (theThingType, bulletType, avatar) {
     //Call parent constructor, provide the z index
     FM.GameObject.call(this, 10);
     //Add components to the game object
-    this.spatial = new FM.SpatialComponent(512, 370, this);
+    this.spatial = new FM.SpatialComponent(600, 470, this);
     this.addComponent(this.spatial);
-    this.renderer = new FM.AnimatedSpriteRendererComponent(FM.AssetManager.getAssetByName("theThing"), 140, 140, this);
+    this.renderer = new FM.AnimatedSpriteRendererComponent(FM.AssetManager.getAssetByName("theThing"), 168, 168, this);
+    this.renderer.addAnimation("avoid", [0], 5, false);
+    this.renderer.addAnimation("attack", [1], 5, false);
     this.addComponent(this.renderer);
+    this.renderer.play("avoid");
     this.physic = new FM.CircleComponent(60, this);
-    this.physic.offset.x = 10;
-    this.physic.offset.y = 10;
+    this.physic.offset.x = 24;
+    this.physic.offset.y = 24;
     this.addComponent(this.physic);
+    this.sound = new FM.AudioComponent(this);
+    this.sound.addSound(FM.AssetManager.getAssetByName("the_thing_hit"));
+    this.addComponent(this.sound);
     
     this.avatar = avatar;
     this.bulletType = bulletType;
@@ -45,45 +51,16 @@ TheThing.prototype.constructor = TheThing;
 */
 TheThing.prototype.update = function (dt) {
     "use strict";
-    // Hit
-    var collision = this.theThingType.overlapsWithType(this.bulletType);
-    if (collision) {
-        var objA = collision.a.owner,
-            objB = collision.b.owner;
-        if (objA.active || objB.active) {
-            if (this.physic.radius > 8) {
-                this.health -= 4;
-                this.renderer.setWidth(this.renderer.getWidth() - 8);
-                this.renderer.setHeight(this.renderer.getHeight() - 8);
-                this.physic.radius -= 4;
-                this.spatial.position.x += 4;
-                this.spatial.position.y += 4;
-                if (objA.hasType(this.bulletType)) {
-                    objA.kill();
-                    objA.hide();
-                } else if (objB.hasType(this.bulletType)) {
-                    objB.kill();
-                    objB.hide();
-                }
-            } else {
-                // Kill
-                if (objA.hasType(this.theThingType)) {
-                    objA.kill();
-                    objA.hide();
-                } else if (objB.hasType(this.theThingType)) {
-                    objB.kill();
-                    objB.hide();
-                }
-            }
-        }
-    }
     // Growing
-    this.renderer.setWidth(this.renderer.getWidth() + 0.2);
-    this.renderer.setHeight(this.renderer.getHeight() + 0.2);
-    this.physic.radius += 0.1;
-    this.spatial.position.x -= 0.1;
-    this.spatial.position.y -= 0.1;
-    this.health += 0.1;
+    if (this.currentState !== "freed") {
+        // TODO why is it not growing at the same speed (physic and renderer ? frame rate between physics and rendering ?)
+        this.renderer.setWidth(this.renderer.getWidth() + 0.1);
+        this.renderer.setHeight(this.renderer.getHeight() + 0.1);
+        this.physic.radius += 0.05;
+        this.spatial.position.x -= 0.05;
+        this.spatial.position.y -= 0.05;
+        this.health += 0.05;
+    }
     // Avoid player
     if (this.currentState === "avoid") {
         var avatarPosition = new FM.Vector(this.avatar.spatial.position.x + this.avatar.physic.offset.x + this.avatar.physic.radius, this.avatar.spatial.position.y + this.avatar.physic.offset.y + this.avatar.physic.radius),
@@ -130,27 +107,93 @@ TheThing.prototype.update = function (dt) {
             this.burstTime = 0;
         }
         this.burstTime += dt;
+    } else if (this.currentState === "freed") {
+        this.physic.velocity.reset(0, -150);
+    }
+    
+    if (this.currentState === "freed" && this.spatial.position.y < 0) {
+        FM.Game.switchState(new EndState("win"));
     }
     
     // If low on health then avoid player
-    if (this.health <= 70) {
-        console.log("AVOID");
-        this.currentState = "avoid";
+    if (this.currentState !== "freed") {
+        if (this.health <= 70) {
+            this.renderer.play("avoid");
+            this.currentState = "avoid";
+        }
+        // If high on health then attack
+        if (this.health >= 120) {
+            this.renderer.play("attack");
+            this.currentState = "attack";
+        }
+        // If player out of bullets then attack
+        if (this.avatar.bulletsLeft < 10 && this.health > 70) {
+            this.renderer.play("attack");
+            this.currentState = "attack"
+        }
+        // If player full of bullets then avoid
+        if (this.avatar.bulletsLeft > 30 && this.health < 120) {
+            this.renderer.play("avoid");
+            this.currentState = "avoid";
+        }
     }
-    // If high on health then attack
-    if (this.health >= 120) {
-        console.log("ATTACK");
-        this.currentState = "attack";
-    }
-    // If player out of bullets then attack
-    if (this.avatar.bulletsLeft < 10 && this.health > 70) {
-        console.log("ATTACK");
-        this.currentState = "attack"
-    }
-    // If player full of bullets then avoid
-    if (this.avatar.bulletsLeft > 30 && this.health < 120) {
-        console.log("AVOID");
-        this.currentState = "avoid";
+    // Hit
+    if (this.currentState !== "freed") {
+        var collision = this.theThingType.overlapsWithType(this.bulletType);
+        if (collision) {
+            var objA = collision.a.owner,
+                objB = collision.b.owner;
+            if (objA.active || objB.active) {
+                if (this.physic.radius > 8) {
+                    this.health -= 10;
+                    this.renderer.setWidth(this.renderer.getWidth() - 20);
+                    this.renderer.setHeight(this.renderer.getHeight() - 20);
+                    this.physic.radius -= 10;
+                    this.spatial.position.x += 10;
+                    this.spatial.position.y += 10;
+                    if (objA.hasType(this.bulletType)) {
+                        var emitterObj = new FM.GameObject(99);
+                        emitterObj.addComponent(new FM.SpatialComponent(objA.components[FM.ComponentTypes.SPATIAL].position.x, objA.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
+                        var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
+                        emitterObj.addComponent(emitter);
+                        FM.Game.currentState.add(emitterObj);
+                        emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
+                        emitter.emit(2, -1, 5);
+                        objA.kill();
+                        objA.hide();
+                        this.sound.play("the_thing_hit", 1, false);
+                    } else if (objB.hasType(this.bulletType)) {
+                        var emitterObj = new FM.GameObject(99);
+                        emitterObj.addComponent(new FM.SpatialComponent(objB.components[FM.ComponentTypes.SPATIAL].position.x, objB.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
+                        var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
+                        emitterObj.addComponent(emitter);
+                        FM.Game.currentState.add(emitterObj);
+                        emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
+                        emitter.emit(2, -1, 5);
+                        objB.kill();
+                        objB.hide();
+                        this.sound.play("the_thing_hit", 1, false);
+                    }
+                } else {
+                    // Kill
+                    if (objA.hasType(this.theThingType)) {
+                        objA.kill();
+                        objA.hide();
+                        if (!this.sound.isPlaying("the_thing_hit")) {
+                            this.sound.play("the_thing_hit");
+                        }
+                        FM.Game.switchState(new EndState("winlose"));
+                    } else if (objB.hasType(this.theThingType)) {
+                        objB.kill();
+                        objB.hide();
+                        if (!this.sound.isPlaying("the_thing_hit")) {
+                            this.sound.play("the_thing_hit");
+                        }
+                        FM.Game.switchState(new EndState("winlose"));
+                    }
+                }
+            }
+        }
     }
 };
 /**
@@ -160,6 +203,8 @@ TheThing.prototype.destroy = function () {
     "use strict";
     //Call parent method
     FM.GameObject.prototype.destroy.call(this);
-
-    //Remove the references
+    this.bulletType.destroy();
+    this.bulletType = null;
+    this.theThingType.destroy();
+    this.theThingType = null;
 };

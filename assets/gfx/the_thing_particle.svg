@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="10"
-   height="10"
+   width="2.0000002"
+   height="1.9999996"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="cursor.svg"
-   inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\cursor.png"
+   sodipodi:docname="the_thing_particle.svg"
+   inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\prison_particle.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -27,21 +27,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.4"
-     inkscape:cx="4.1659053"
-     inkscape:cy="-1.5332368"
+     inkscape:zoom="253.42707"
+     inkscape:cx="1.9706879"
+     inkscape:cy="0.35407606"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
      inkscape:window-width="1920"
      inkscape:window-height="1028"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,13 +58,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-9.381669,-319.81282)">
-    <rect
-       style="fill:#f0f0f0;fill-opacity:1;stroke:#000000;stroke-width:1.8040936;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2985"
-       width="8.1959057"
-       height="8.1959066"
-       x="10.283716"
-       y="320.71487" />
+     transform="translate(-157.92294,-366.72497)">
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="path2985"
+       sodipodi:cx="237.14285"
+       sodipodi:cy="295.93362"
+       sodipodi:rx="74.285713"
+       sodipodi:ry="67.85714"
+       d="m 311.42857,295.93362 c 0,37.47647 -33.25885,67.85714 -74.28572,67.85714 -41.02686,0 -74.28571,-30.38067 -74.28571,-67.85714 0,-37.47646 33.25885,-67.85714 74.28571,-67.85714 41.02687,0 74.28572,30.38068 74.28572,67.85714 z"
+       transform="matrix(0.01346154,0,0,0.01473684,155.73063,363.36384)"
+       inkscape:export-filename="D:\WIP\Au-Delà\assets\gfx\the_thing_particle.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

@@ -2,10 +2,13 @@
 /**
  * The MenuState for creating title, menu and stuff.
  */
-var MenuState = function () {
+var EndState = function (status) {
     "use strict";
     //Call parent constructor
     FM.State.call(this);
+    
+    this.status = status;
+    
     /*
      * The title of the game.
      */
@@ -15,16 +18,15 @@ var MenuState = function () {
      * Instructions
      */
     this.instructions = new FM.GameObject(10);
-    this.tuto = new FM.GameObject(10);
 };
 //MenuState inherits from FM.State
-MenuState.prototype = Object.create(FM.State.prototype);
-MenuState.prototype.constructor = MenuState;
+EndState.prototype = Object.create(FM.State.prototype);
+EndState.prototype.constructor = EndState;
 /**
  * The init function inherited from FM.State.
  * Called first.
  */
-MenuState.prototype.init = function () {
+EndState.prototype.init = function () {
     "use strict";
     //Call parent method
     FM.State.prototype.init.call(this);
@@ -39,7 +41,7 @@ MenuState.prototype.init = function () {
     //Add a spatial component to the title to specify a position
     this.title.addComponent(new FM.SpatialComponent(100, 100, this.title));
     //Add a text renderer component to the title to display a text
-    this.title.addComponent(new FM.TextRendererComponent("---- AU DELA ----", this.title));
+    this.title.addComponent(new FM.TextRendererComponent("---- THE END ----", this.title));
     //Format the title by calling the setFormat method of the renderer component
     this.title.components[FM.ComponentTypes.RENDERER].setFormat('#f00', '60px sans-serif', 'middle');
     //Add the title to the MenuState to have the engine display and update it
@@ -47,46 +49,31 @@ MenuState.prototype.init = function () {
     //Add a spatial component to the title to specify a position
     this.instructions.addComponent(new FM.SpatialComponent(380, 320, this.instructions));
     //Add a text renderer component to the title to display a text
-    this.instructions.addComponent(new FM.TextRendererComponent("/* Mouse click to start */", this.instructions));
+    var text = "";
+    if (this.status === "lost") {
+        text = "/* You lost */";
+    } else if (this.status === "winlose") {
+        text = "/* You killed the thing... */";
+    } else {
+        text = "/* The thing is free! */";
+    }
+    this.instructions.addComponent(new FM.TextRendererComponent(text, this.instructions));
     this.instructions.components[FM.ComponentTypes.RENDERER].setFormat('#000', '30px sans-serif', 'middle');
     //Add the title to the MenuState to have the engine display and update it
     this.add(this.instructions);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 450, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| WQSD to move |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
-    this.tuto = new FM.GameObject(10);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 500, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| Mouse to aim |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
-    this.tuto = new FM.GameObject(10);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 550, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| Short mouse click to shoot a slow bullet |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
-    this.tuto = new FM.GameObject(10);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 600, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| Long mouse click to shoot a fast bullet |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
-    this.tuto = new FM.GameObject(10);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 650, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| SPACE to boost speed for a few seconds |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
-    this.tuto = new FM.GameObject(10);
-    this.tuto.addComponent(new FM.SpatialComponent(100, 700, this.tuto));
-    this.tuto.addComponent(new FM.TextRendererComponent("| Esc to retry |", this.tuto));
-    this.tuto.components[FM.ComponentTypes.RENDERER].setFormat('#000', '20px sans-serif', 'middle');
-    this.add(this.tuto);
+    this.instructions = new FM.GameObject(10);
+    this.instructions.addComponent(new FM.SpatialComponent(380, 440, this.instructions));
+    this.instructions.addComponent(new FM.TextRendererComponent("Esc to retry", this.instructions));
+    this.instructions.components[FM.ComponentTypes.RENDERER].setFormat('#000', '30px sans-serif', 'middle');
+    //Add the title to the MenuState to have the engine display and update it
+    this.add(this.instructions);
 };
 /**
  * The update function inherited from FM.State.
  * Called each frame.
  * @param {Number} dt Fixed delta time since the last frame.
  */
-MenuState.prototype.update = function (dt) {
+EndState.prototype.update = function (dt) {
     "use strict";
     //Call parent method
     FM.State.prototype.update.call(this, dt);
@@ -99,14 +86,14 @@ MenuState.prototype.update = function (dt) {
 
     //Update instructions
     //Switch to the PlayState if the player press the SPACE key
-    if (FM.Game.isMouseClicked()) {
+    if (FM.Game.isKeyPressed(FM.Keyboard.ESCAPE)) {
         FM.Game.switchState(new PlayState());
     }
 };
 /**
  * 
  */
-MenuState.prototype.destroy = function () {
+EndState.prototype.destroy = function () {
     "use strict";
     //Call parent method
     FM.State.prototype.destroy.call(this);
