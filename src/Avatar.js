@@ -183,13 +183,3 @@ Avatar.prototype.update = function (dt) {
     }
     // Gain new bullets
 };
-/**
-*
-*/
-Avatar.prototype.destroy = function () {
-    "use strict";
-    //Call parent method
-    FM.GameObject.prototype.destroy.call(this);
-
-    //Remove the references
-};
