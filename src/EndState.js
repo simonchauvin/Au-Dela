@@ -90,14 +90,3 @@ EndState.prototype.update = function (dt) {
         FM.Game.switchState(new PlayState());
     }
 };
-/**
- * 
- */
-EndState.prototype.destroy = function () {
-    "use strict";
-    //Call parent method
-    FM.State.prototype.destroy.call(this);
-
-    //Remove the references
-    this.title = null;
-};
