@@ -10,18 +10,12 @@ var Bullet = function (position, bulletType, active) {
     //Add components to the game object
     this.spatial = new FM.SpatialComponent(position.x, position.y, this);
     this.addComponent(this.spatial);
-    /*var size = 2;
-    if (!active) {
-        size = 3;
-    }*/
     this.renderer = new FM.SpriteRendererComponent(FM.AssetManager.getAssetByName("bullet"), 6, 6, this);
     this.addComponent(this.renderer);
     this.physic = new FM.CircleComponent(3, this);
     this.addComponent(this.physic);
-        
-    this.addType(bulletType);
     
-    this.active = active;
+    this.addType(bulletType);
     
     /**
      * Speed of a bullet.
