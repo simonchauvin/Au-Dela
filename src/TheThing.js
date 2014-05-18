@@ -26,8 +26,6 @@ var TheThing = function (theThingType, bulletType, avatar) {
     this.bulletType = bulletType;
     this.theThingType = theThingType;
     this.addType(theThingType);
-    //TODO empty the world. WHY ???
-    //this.physic.addTypeToCollideWith(this.bulletType);
     
     this.health = 70;
     this.attackSpeed = 70;
@@ -143,68 +141,50 @@ TheThing.prototype.update = function (dt) {
         if (collision) {
             var objA = collision.a.owner,
                 objB = collision.b.owner;
-            if (objA.active || objB.active) {
-                if (this.physic.radius > 8) {
-                    this.health -= 10;
-                    this.renderer.setWidth(this.renderer.getWidth() - 20);
-                    this.renderer.setHeight(this.renderer.getHeight() - 20);
-                    this.physic.radius -= 10;
-                    this.spatial.position.x += 10;
-                    this.spatial.position.y += 10;
-                    if (objA.hasType(this.bulletType)) {
-                        var emitterObj = new FM.GameObject(99);
-                        emitterObj.addComponent(new FM.SpatialComponent(objA.components[FM.ComponentTypes.SPATIAL].position.x, objA.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
-                        var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
-                        emitterObj.addComponent(emitter);
-                        FM.Game.currentState.add(emitterObj);
-                        emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
-                        emitter.emit(2, -1, 5);
-                        objA.kill();
-                        objA.hide();
-                        this.sound.play("the_thing_hit", 1, false);
-                    } else if (objB.hasType(this.bulletType)) {
-                        var emitterObj = new FM.GameObject(99);
-                        emitterObj.addComponent(new FM.SpatialComponent(objB.components[FM.ComponentTypes.SPATIAL].position.x, objB.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
-                        var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
-                        emitterObj.addComponent(emitter);
-                        FM.Game.currentState.add(emitterObj);
-                        emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
-                        emitter.emit(2, -1, 5);
-                        objB.kill();
-                        objB.hide();
-                        this.sound.play("the_thing_hit", 1, false);
-                    }
-                } else {
-                    // Kill
-                    if (objA.hasType(this.theThingType)) {
-                        objA.kill();
-                        objA.hide();
-                        if (!this.sound.isPlaying("the_thing_hit")) {
-                            this.sound.play("the_thing_hit");
-                        }
-                        FM.Game.switchState(new EndState("winlose"));
-                    } else if (objB.hasType(this.theThingType)) {
-                        objB.kill();
-                        objB.hide();
-                        if (!this.sound.isPlaying("the_thing_hit")) {
-                            this.sound.play("the_thing_hit");
-                        }
-                        FM.Game.switchState(new EndState("winlose"));
-                    }
+            if (this.physic.radius > 8) {
+                this.health -= 10;
+                this.renderer.setWidth(this.renderer.getWidth() - 20);
+                this.renderer.setHeight(this.renderer.getHeight() - 20);
+                this.physic.radius -= 10;
+                this.spatial.position.x += 10;
+                this.spatial.position.y += 10;
+                if (objA.hasType(this.bulletType)) {
+                    var emitterObj = new FM.GameObject(99);
+                    emitterObj.addComponent(new FM.SpatialComponent(objA.components[FM.ComponentTypes.SPATIAL].position.x, objA.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
+                    var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
+                    emitterObj.addComponent(emitter);
+                    FM.Game.currentState.add(emitterObj);
+                    emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
+                    emitter.emit(2, -1, 5);
+                    objA.kill();
+                    objA.hide();
+                    this.sound.play("the_thing_hit", 1, false);
+                } else if (objB.hasType(this.bulletType)) {
+                    var emitterObj = new FM.GameObject(99);
+                    emitterObj.addComponent(new FM.SpatialComponent(objB.components[FM.ComponentTypes.SPATIAL].position.x, objB.components[FM.ComponentTypes.SPATIAL].position.y, emitterObj));
+                    var emitter = new FM.EmitterComponent(new FM.Vector(2, 2), emitterObj);
+                    emitterObj.addComponent(emitter);
+                    FM.Game.currentState.add(emitterObj);
+                    emitter.createParticles(5, FM.AssetManager.getAssetByName("the_thing_particle"), 4, 4, 1, 99);
+                    emitter.emit(2, -1, 5);
+                    objB.kill();
+                    objB.hide();
+                    this.sound.play("the_thing_hit", 1, false);
+                }
+            } else {
+                // Kill
+                if (objA.hasType(this.theThingType)) {
+                    objA.kill();
+                    objA.hide();
+                    this.sound.play("the_thing_hit");
+                    FM.Game.switchState(new EndState("winlose"));
+                } else if (objB.hasType(this.theThingType)) {
+                    objB.kill();
+                    objB.hide();
+                    this.sound.play("the_thing_hit");
+                    FM.Game.switchState(new EndState("winlose"));
                 }
             }
         }
     }
-};
-/**
-*
-*/
-TheThing.prototype.destroy = function () {
-    "use strict";
-    //Call parent method
-    FM.GameObject.prototype.destroy.call(this);
-    this.bulletType.destroy();
-    this.bulletType = null;
-    this.theThingType.destroy();
-    this.theThingType = null;
 };
